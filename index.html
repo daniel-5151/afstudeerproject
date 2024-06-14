@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="scripts/main.js" type="module"></script>
+<script src="scripts/qualitative.js" type="module"></script>
+<script src="scripts/quantitative.js" type="module"></script>
+<body>
+    <div class="container">
+        <div class="left-boxes">
+            <div class="input-box">
+                <div class="textarea-wrapper">
+                    <label for="model-rules">Model rules:</label>
+                    <textarea id="model-rules" rows ="7" cols="20" form="usrform"></textarea>
+                </div>
+                <div class="textarea-wrapper">
+                    <label for="start-values">Starting values:</label>
+                    <textarea id="start-values" rows ="7" cols="20" form="usrform"></textarea>
+                </div>
+
+                <div class="lower-input-box">
+                    <div class="standard-rules">
+                        <p>
+                            Standard Rules: <br>
+                            t = 0 (start) <br>
+                            t = t + dt
+                        </p>
+                    </div>
+
+                    <div class="input-number">
+                        <label for="dt">dt:</label><br>
+                        <input type="number" id="dt" value="1"><br>
+                        <label for="iterations">Iterations:</label><br>
+                        <input type="number" id="iterations" value="100"><br>
+                    </div>
+
+                    <div class="button-box">
+                        <button id="tempButton">Generate plot</button>
+                    </div>
+
+                </div>
+
+                <div id="error-explanation"></div>
+
+
+
+                
+            </div>
+            <div class="plot-box" style="height: 400px;">
+                <div id="plot1" style="width:100%;max-width:700px"></div>
+            </div>
+        </div>
+        <div class="right-box" id="canvas-box">
+            <canvas id="canvas-1"></canvas>
+        </div>
+    </div>
+</body>
+</html>

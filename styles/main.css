@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.left-boxes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 2;
+    padding: 20px;
+}
+
+.plot-box {
+    flex: 1;
+}
+
+.right-box {
+    flex: 3;
+    padding: 20px;
+    border: 1px solid #000000
+}
+
+.input-box {
+    margin-bottom: 20px; /* Add margin to the container */
+    /* border: 1px solid blue; */
+}
+
+.textarea-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Add margin to the container */
+    /* border: 1px solid red; */
+}
+
+.textarea-wrapper label {
+    margin-bottom: 5px; /* Add spacing between label and textarea */
+}
+
+.lower-input-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#canvas-1 {
+    width: 100%;
+    height: 100%;
+}
+
+input[type="number"] {
+    width: 70px;
+}
+
+#tempButton {
+    background-color: #002ead;
+    color: #fff;
+    border:none; 
+    border-radius:10px; 
+    padding:15px;
+    min-height:30px; 
+    min-width: 120px;
+}
+
+#tempButton:hover {
+    background-color:#0241ee;
+    transition: 0.7s;
+    cursor: pointer;
+}
+
+#error-explanation {
+    color: #dc3545;
+    font-family: sans-serif;
+}
