@@ -21,11 +21,10 @@ class Quantity {
         ctx.fillText(this.name, this.x + this.radius * 1.4, this.y);
     }
 
-    addLink(node, influence) {
+    addLink(node, influence, dependancy_type) {
         this.parents.push(node);
         this.influences[node.name] = influence;
-        // this.influences_types[node.name] = influence_type;
-        // this.dependency_types[node.name] = dependancy_type;
+        this.dependency_types[node.name] = dependancy_type;
     }
 
     resetLinks() {
@@ -39,10 +38,12 @@ class Quantity {
     drawLines(ctx) {
         ctx.lineWidth = 1;
         this.parents.forEach(linkedNode => {
-            if(this.influences[linkedNode.name] == 1) {
-                ctx.strokeStyle = 'green';
+            if (this.influences[linkedNode.name] == 1) {
+                if (this.dependency_types[linkedNode.name] == 1) { ctx.strokeStyle = 'cornflowerblue'; }
+                else { ctx.strokeStyle = 'green'; };
             } else {
-                ctx.strokeStyle = 'red';
+                if (this.dependency_types[linkedNode.name] == 1) { ctx.strokeStyle = 'red'; }
+                else { ctx.strokeStyle = 'coral'; };
             }
 
             // Calculate the unit vector in direction of the arrow
@@ -117,20 +118,21 @@ function evaluateDependacies(formula) {
             // Do nothing
         } else {
             dependancies[token] = sign;
-            if (tokens[i+1] === '*' && token[i+2] === ('t' || 'dt')) {
+            if (tokens[i+1] === '*' && (tokens[i+2] === 't' || tokens[i+2] === 'dt')) {
                 dependancie_types[token] = 1; 
-            } else if (tokens[i+1] === '/' && token[i+2] === ('t' || 'dt')) {
+            } else if (tokens[i+1] === '/' && (tokens[i+2] === 't' || tokens[i+2] === 'dt')) {
                 dependancie_types[token] = 1;
-            } else if (tokens[i+1] === '**' && token[i+2] === ('t' || 'dt')) {
+            } else if (tokens[i+1] === '**' && (tokens[i+2] === 't' || tokens[i+2] === 'dt')) {
                 dependancie_types[token] = 1;
             } else {
-                dependancie_types[token] = 1
+                dependancie_types[token] = 0;
             }
         }
 
         i++
     });
-    return dependancies;
+
+    return [dependancies, dependancie_types];
 }
 
 const canvas = document.getElementById("canvas-1");
@@ -169,13 +171,16 @@ export function drawCanvas(quantitiesDict) {
 
         if (parents) {
             let dependancies = evaluateDependacies(quantitiesDict[node.name]);
+            let influences = dependancies[0];
+            let types = dependancies[1];
             parents = parents.filter(parent => parent !== node.name && parent !== "dt" && parent !== "t");
 
             parents.forEach(parent => {
-                var index = nodes.findIndex(obj => obj.name === parent);
+                let index = nodes.findIndex(obj => obj.name === parent);
                 if (index!=-1){
-                    var influence = dependancies[parent];
-                    node.addLink(nodes[index], influence);
+                    let influence = influences[parent];
+                    let type = types[parent];
+                    node.addLink(nodes[index], influence, type);
                 } else {
                     undefinedVars.push(parent);
                 }  
